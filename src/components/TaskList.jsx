@@ -1,19 +1,40 @@
+import { useState, useEffect } from 'react';
 import Task from './Task';
 
 const TaskList = () => {
-  const task = [
-    { id: 1, name: 'Task 1', completed: false },
-    { id: 2, name: 'Task 2', completed: true },
-    { id: 3, name: 'Task 3', completed: false },
-  ];
+    const [tasks, setTasks] = 
+  useState([]);
+
+ useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    setTasks(storedTasks);
+  }, []);
+
+  // Actualizar localStorage cada vez que cambie alguna tarea
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = () => {
+    const newTask = { description: '', completed: false };
+    setTasks([...tasks, newTask]);
+  };
+
+  const updateTask = (index, task) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = task;
+    setTasks(updatedTasks);
+  };
 
   return (
     <div>
-      {task.map(task => (
-        <Task key={task.id} name={task.name} completed={task.completed} />
+      <button onClick={addTask}>Agregar tarea</button>
+      {tasks.map((task, index) => (
+        <Task key={index} index={index} task={task} updateTask={updateTask} />
       ))}
     </div>
   );
 };
 
 export default TaskList;
+
