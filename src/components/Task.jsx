@@ -1,21 +1,24 @@
-import { useState } from "react";
-
-
+/* eslint-disable react/prop-types */
 
 // eslint-disable-next-line react/prop-types
-const Task = ({ name, completed }) => {
-  const [isChecked, setIsChecked] = useState(completed);
+const Task = ({ index, task, updateTask }) => {
+  const handleDescriptionChange = (event) => {
+    const newTask = { ...task, description: event.target.value };
+    updateTask(index, newTask);
+  };
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+  const handleCompletedChange = (event) => {
+    const newTask = { ...task, completed: event.target.checked };
+    updateTask(index, newTask);
   };
 
   return (
     <div>
-      <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-      <span style={{ textDecoration: isChecked ? 'line-through' : 'none' }}>{name}</span>
+      <input type="text" value={task.description} onChange={handleDescriptionChange} />
+      <input type="checkbox" checked={task.completed} onChange={handleCompletedChange} />
     </div>
   );
 };
 
 export default Task;
+
