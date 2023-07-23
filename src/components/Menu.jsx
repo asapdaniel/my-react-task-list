@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Box, Flex, Image, Text, useColorModeValue } from "@chakra-ui/react";
-import ToggleColorMode from './ToggleColorMode';
+import ToggleColorMode from './toggleColorMode';
 import logo from "../assets/favicon.ico";
 
 const Menu = () => {
